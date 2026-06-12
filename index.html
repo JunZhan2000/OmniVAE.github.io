@@ -23,6 +23,7 @@
       <nav>
         <a href="#method">Method</a>
         <a href="#examples">Examples</a>
+        <a href="#cases">Cases</a>
         <a href="#results">Results</a>
         <a href="#resources">Resources</a>
       </nav>
@@ -183,6 +184,268 @@
                 A formal lecture-style prompt rendered as synchronized speech
                 and face motion.
               </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="cases" class="section band case-studies">
+        <div class="container">
+          <div class="section-heading">
+            <p class="section-label">Case Comparison</p>
+            <h2>Five prompts where aligned latents improve T2AV generation.</h2>
+            <p>
+              These paired samples are selected from Verse-Bench Set3-large by
+              combined gains over the reconstruction-only VAE. Sync score is
+              reported as DeSync error, so lower is better; LSE-C, CLAP, and
+              DNSMOS are higher-is-better audio-visual quality signals.
+            </p>
+          </div>
+
+          <div class="case-list">
+            <article class="case-card">
+              <div class="case-header">
+                <span>Set3-large / 1049</span>
+                <h3>"Let's just say imitation was the sincerest form of flattery."</h3>
+              </div>
+              <div class="case-body">
+                <div class="case-videos">
+                  <figure>
+                    <video controls preload="metadata" poster="assets/videos/cases/1049-recon.jpg">
+                      <source src="assets/videos/cases/1049-recon.mp4" type="video/mp4" />
+                    </video>
+                    <figcaption>Recon</figcaption>
+                  </figure>
+                  <figure class="case-best">
+                    <video controls preload="metadata" poster="assets/videos/cases/1049-omnivae.jpg">
+                      <source src="assets/videos/cases/1049-omnivae.mp4" type="video/mp4" />
+                    </video>
+                    <figcaption>Recon + Distill + AVCLIP</figcaption>
+                  </figure>
+                </div>
+                <div class="case-metrics">
+                  <div class="case-metric-row">
+                    <span>Sync error, DeSync</span>
+                    <strong>1.20 -> 0.40</strong>
+                    <em>0.80 lower</em>
+                  </div>
+                  <div class="case-metric-row">
+                    <span>Lip score, LSE-C</span>
+                    <strong>1.83 -> 4.76</strong>
+                    <em>+2.92</em>
+                  </div>
+                  <div class="case-metric-row">
+                    <span>Audio-text CLAP</span>
+                    <strong>0.283 -> 0.391</strong>
+                    <em>+0.108</em>
+                  </div>
+                  <div class="case-metric-row">
+                    <span>DNSMOS</span>
+                    <strong>3.53 -> 3.65</strong>
+                    <em>+0.12</em>
+                  </div>
+                  <div class="case-metric-row">
+                    <span>Audio FD</span>
+                    <strong>0.782 -> 0.564</strong>
+                    <em>0.218 lower</em>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="case-card">
+              <div class="case-header">
+                <span>Set3-large / 1099</span>
+                <h3>"What if I used AI to create a new instrument sound that's never existed?"</h3>
+              </div>
+              <div class="case-body">
+                <div class="case-videos">
+                  <figure>
+                    <video controls preload="metadata" poster="assets/videos/cases/1099-recon.jpg">
+                      <source src="assets/videos/cases/1099-recon.mp4" type="video/mp4" />
+                    </video>
+                    <figcaption>Recon</figcaption>
+                  </figure>
+                  <figure class="case-best">
+                    <video controls preload="metadata" poster="assets/videos/cases/1099-omnivae.jpg">
+                      <source src="assets/videos/cases/1099-omnivae.mp4" type="video/mp4" />
+                    </video>
+                    <figcaption>Recon + Distill + AVCLIP</figcaption>
+                  </figure>
+                </div>
+                <div class="case-metrics">
+                  <div class="case-metric-row">
+                    <span>Sync error, DeSync</span>
+                    <strong>2.00 -> 0.10</strong>
+                    <em>1.90 lower</em>
+                  </div>
+                  <div class="case-metric-row">
+                    <span>Lip score, LSE-C</span>
+                    <strong>1.02 -> 2.34</strong>
+                    <em>+1.32</em>
+                  </div>
+                  <div class="case-metric-row">
+                    <span>Speech WER</span>
+                    <strong>0.143 -> 0.071</strong>
+                    <em>0.071 lower</em>
+                  </div>
+                  <div class="case-metric-row">
+                    <span>DNSMOS</span>
+                    <strong>3.74 -> 3.75</strong>
+                    <em>+0.01</em>
+                  </div>
+                  <div class="case-metric-row">
+                    <span>Audio KL</span>
+                    <strong>0.157 -> 0.096</strong>
+                    <em>0.061 lower</em>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="case-card">
+              <div class="case-header">
+                <span>Set3-large / 1077</span>
+                <h3>"But here's the thing, it's all fake."</h3>
+              </div>
+              <div class="case-body">
+                <div class="case-videos">
+                  <figure>
+                    <video controls preload="metadata" poster="assets/videos/cases/1077-recon.jpg">
+                      <source src="assets/videos/cases/1077-recon.mp4" type="video/mp4" />
+                    </video>
+                    <figcaption>Recon</figcaption>
+                  </figure>
+                  <figure class="case-best">
+                    <video controls preload="metadata" poster="assets/videos/cases/1077-omnivae.jpg">
+                      <source src="assets/videos/cases/1077-omnivae.mp4" type="video/mp4" />
+                    </video>
+                    <figcaption>Recon + Distill + AVCLIP</figcaption>
+                  </figure>
+                </div>
+                <div class="case-metrics">
+                  <div class="case-metric-row">
+                    <span>Sync error, DeSync</span>
+                    <strong>2.00 -> 0.20</strong>
+                    <em>1.80 lower</em>
+                  </div>
+                  <div class="case-metric-row">
+                    <span>Lip score, LSE-C</span>
+                    <strong>0.93 -> 1.86</strong>
+                    <em>+0.94</em>
+                  </div>
+                  <div class="case-metric-row">
+                    <span>Audio-text CLAP</span>
+                    <strong>0.084 -> 0.167</strong>
+                    <em>+0.083</em>
+                  </div>
+                  <div class="case-metric-row">
+                    <span>DNSMOS</span>
+                    <strong>2.90 -> 3.23</strong>
+                    <em>+0.33</em>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="case-card">
+              <div class="case-header">
+                <span>Set3-large / 1074</span>
+                <h3>"who don't feel like they can be themselves and therefore are holding back their best ideas."</h3>
+              </div>
+              <div class="case-body">
+                <div class="case-videos">
+                  <figure>
+                    <video controls preload="metadata" poster="assets/videos/cases/1074-recon.jpg">
+                      <source src="assets/videos/cases/1074-recon.mp4" type="video/mp4" />
+                    </video>
+                    <figcaption>Recon</figcaption>
+                  </figure>
+                  <figure class="case-best">
+                    <video controls preload="metadata" poster="assets/videos/cases/1074-omnivae.jpg">
+                      <source src="assets/videos/cases/1074-omnivae.mp4" type="video/mp4" />
+                    </video>
+                    <figcaption>Recon + Distill + AVCLIP</figcaption>
+                  </figure>
+                </div>
+                <div class="case-metrics">
+                  <div class="case-metric-row">
+                    <span>Sync error, DeSync</span>
+                    <strong>1.90 -> 0.20</strong>
+                    <em>1.70 lower</em>
+                  </div>
+                  <div class="case-metric-row">
+                    <span>Lip score, LSE-C</span>
+                    <strong>1.88 -> 3.11</strong>
+                    <em>+1.23</em>
+                  </div>
+                  <div class="case-metric-row">
+                    <span>Speech WER</span>
+                    <strong>0.125 -> 0.063</strong>
+                    <em>0.063 lower</em>
+                  </div>
+                  <div class="case-metric-row">
+                    <span>DNSMOS</span>
+                    <strong>2.95 -> 3.41</strong>
+                    <em>+0.46</em>
+                  </div>
+                  <div class="case-metric-row">
+                    <span>Audio FD</span>
+                    <strong>0.641 -> 0.526</strong>
+                    <em>0.114 lower</em>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="case-card">
+              <div class="case-header">
+                <span>Set3-large / 1076</span>
+                <h3>"He said, I'm going to use that technology to enhance my career."</h3>
+              </div>
+              <div class="case-body">
+                <div class="case-videos">
+                  <figure>
+                    <video controls preload="metadata" poster="assets/videos/cases/1076-recon.jpg">
+                      <source src="assets/videos/cases/1076-recon.mp4" type="video/mp4" />
+                    </video>
+                    <figcaption>Recon</figcaption>
+                  </figure>
+                  <figure class="case-best">
+                    <video controls preload="metadata" poster="assets/videos/cases/1076-omnivae.jpg">
+                      <source src="assets/videos/cases/1076-omnivae.mp4" type="video/mp4" />
+                    </video>
+                    <figcaption>Recon + Distill + AVCLIP</figcaption>
+                  </figure>
+                </div>
+                <div class="case-metrics">
+                  <div class="case-metric-row">
+                    <span>Sync error, DeSync</span>
+                    <strong>1.00 -> 0.10</strong>
+                    <em>0.90 lower</em>
+                  </div>
+                  <div class="case-metric-row">
+                    <span>Lip score, LSE-C</span>
+                    <strong>1.80 -> 3.38</strong>
+                    <em>+1.59</em>
+                  </div>
+                  <div class="case-metric-row">
+                    <span>Audio-text CLAP</span>
+                    <strong>0.066 -> 0.158</strong>
+                    <em>+0.091</em>
+                  </div>
+                  <div class="case-metric-row">
+                    <span>DNSMOS</span>
+                    <strong>3.39 -> 3.94</strong>
+                    <em>+0.55</em>
+                  </div>
+                  <div class="case-metric-row">
+                    <span>Audio FD</span>
+                    <strong>1.125 -> 1.099</strong>
+                    <em>0.026 lower</em>
+                  </div>
+                </div>
+              </div>
             </article>
           </div>
         </div>
