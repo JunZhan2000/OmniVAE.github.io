@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OmniVAE: Cross-Modal Aligned VAE for Joint Audio-Video Generation</title>
+    <meta
+      name="description"
+      content="OmniVAE aligns audio and video VAE latent spaces with segment-level contrastive learning and semantic distillation for text-to-audio-video generation."
+    />
+    <meta property="og:title" content="OmniVAE" />
+    <meta
+      property="og:description"
+      content="A cross-modal aligned audio-video VAE for synchronized, semantically coherent T2AV generation."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/images/omnivae-architecture.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header" aria-label="Primary navigation">
+      <a class="brand" href="#top">OmniVAE</a>
+      <nav>
+        <a href="#method">Method</a>
+        <a href="#examples">Examples</a>
+        <a href="#results">Results</a>
+        <a href="#resources">Resources</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-media" aria-hidden="true">
+          <video autoplay muted loop playsinline poster="assets/videos/speech-stage.jpg">
+            <source src="assets/videos/speech-stage.mp4" type="video/mp4" />
+          </video>
+          <video autoplay muted loop playsinline poster="assets/videos/talk-closeup.jpg">
+            <source src="assets/videos/talk-closeup.mp4" type="video/mp4" />
+          </video>
+          <video autoplay muted loop playsinline poster="assets/videos/lecture-closeup.jpg">
+            <source src="assets/videos/lecture-closeup.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="hero-shade"></div>
+        <div class="hero-copy">
+          <p class="eyebrow">Cross-modal tokenizer for audio-video generation</p>
+          <h1 id="hero-title">OmniVAE</h1>
+          <p class="subtitle">
+            A joint audio-video VAE that keeps separate audio and video codecs,
+            while aligning their latent spaces through segment-level contrastive
+            learning and semantic distillation.
+          </p>
+          <div class="actions" aria-label="Project links">
+            <a class="button primary" href="https://github.com/JunZhan2000/OmniVAE">Code</a>
+            <a class="button" href="https://huggingface.co/zhanjun/OmniVAE">Models</a>
+            <a class="button" href="#" aria-disabled="true">arXiv</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="summary band">
+        <div class="container summary-grid">
+          <article>
+            <span class="metric">1.08B</span>
+            <p>inference VAE parameters across video and audio branches.</p>
+          </article>
+          <article>
+            <span class="metric">+14.8</span>
+            <p>A@1 sync probing gain over reconstruction-only latents.</p>
+          </article>
+          <article>
+            <span class="metric">2.89</span>
+            <p>LSE-C lip-sync score for the full T2AV model on Verse-Bench Set3.</p>
+          </article>
+          <article>
+            <span class="metric">0</span>
+            <p>extra inference overhead from the alignment and distillation heads.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="method" class="section">
+        <div class="container two-column">
+          <div>
+            <p class="section-label">Method</p>
+            <h2>Aligned latents without changing the VAE interface.</h2>
+            <p>
+              OmniVAE keeps mature modality-specific VAE architectures: a 3D
+              causal video VAE and a continuous waveform audio VAE. During
+              training, paired audio-video clips provide two additional signals:
+              a segment-level bidirectional InfoNCE loss for temporal
+              correspondence, and semantic distillation from frozen Qwen3-Omni
+              encoders for modality-level learnability.
+            </p>
+            <p>
+              The contrastive head and distillation projectors are training-only.
+              At inference time the audio and video VAEs are standard independent
+              tokenizers, so they can be used jointly for T2AV generation or
+              separately for reconstruction workflows.
+            </p>
+          </div>
+          <div class="method-points">
+            <article>
+              <h3>Audio-Visual Contrastive Learning</h3>
+              <p>
+                Video latents are spatially aggregated into frame tokens, pooled
+                into temporal segments, and contrasted with matched audio
+                segments using hard intra-clip and sibling-clip negatives.
+              </p>
+            </article>
+            <article>
+              <h3>Uni-Modality Semantic Distillation</h3>
+              <p>
+                Lightweight projectors align each VAE latent stream to frozen
+                semantic teacher features, improving downstream generation while
+                preserving reconstruction quality.
+              </p>
+            </article>
+            <article>
+              <h3>Bridged T2AV Generation</h3>
+              <p>
+                Downstream DiT models combine T2V and T2A priors with
+                zero-initialized bidirectional bridge modules for joint video and
+                audio flow matching.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="figure-section band">
+        <div class="container">
+          <div class="section-heading">
+            <p class="section-label">Architecture</p>
+            <h2>Two independent VAEs, one aligned latent space.</h2>
+          </div>
+          <figure class="architecture">
+            <img
+              src="assets/images/omnivae-architecture.png"
+              alt="OmniVAE architecture with separate video and audio encoders, reconstruction paths, contrastive learning, and semantic distillation."
+            />
+            <figcaption>
+              The alignment and distillation components shape the latent spaces
+              during training, then are removed for inference.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="examples" class="section examples">
+        <div class="container">
+          <div class="section-heading">
+            <p class="section-label">Examples</p>
+            <h2>Text-to-audio-video samples from the released T2AV model.</h2>
+          </div>
+          <div class="video-grid">
+            <article class="sample">
+              <video controls preload="metadata" poster="assets/videos/speech-stage.jpg">
+                <source src="assets/videos/speech-stage.mp4" type="video/mp4" />
+              </video>
+              <h3>Public Speaking</h3>
+              <p>
+                A medium close-up of a speaker on a stage, delivering a measured
+                line before a quiet auditorium.
+              </p>
+            </article>
+            <article class="sample">
+              <video controls preload="metadata" poster="assets/videos/talk-closeup.jpg">
+                <source src="assets/videos/talk-closeup.mp4" type="video/mp4" />
+              </video>
+              <h3>Small Stage Talk</h3>
+              <p>
+                A close-up speaker clip with animated mouth movement and a
+                clean spoken soundtrack.
+              </p>
+            </article>
+            <article class="sample">
+              <video controls preload="metadata" poster="assets/videos/lecture-closeup.jpg">
+                <source src="assets/videos/lecture-closeup.mp4" type="video/mp4" />
+              </video>
+              <h3>Lecture Close-Up</h3>
+              <p>
+                A formal lecture-style prompt rendered as synchronized speech
+                and face motion.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="results" class="section band">
+        <div class="container">
+          <div class="section-heading">
+            <p class="section-label">Results</p>
+            <h2>Alignment improves both probing and downstream generation.</h2>
+          </div>
+          <div class="results-grid">
+            <article class="result-panel">
+              <h3>Audio-Video Sync Probing</h3>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>A@1</th>
+                    <th>A@5</th>
+                    <th>tol1</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Recon</td>
+                    <td>6.4</td>
+                    <td>31.5</td>
+                    <td>16.2</td>
+                  </tr>
+                  <tr>
+                    <td>Recon + Distill</td>
+                    <td>7.1</td>
+                    <td>33.0</td>
+                    <td>17.5</td>
+                  </tr>
+                  <tr>
+                    <td>Recon + AVCLIP</td>
+                    <td>18.1</td>
+                    <td>47.8</td>
+                    <td>34.5</td>
+                  </tr>
+                  <tr class="best">
+                    <td>OmniVAE</td>
+                    <td>20.2</td>
+                    <td>50.1</td>
+                    <td>37.2</td>
+                  </tr>
+                </tbody>
+              </table>
+            </article>
+            <article class="result-panel">
+              <h3>Verse-Bench T2AV</h3>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>FVD</th>
+                    <th>CLAP</th>
+                    <th>LSE-C</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Recon</td>
+                    <td>412.6</td>
+                    <td>0.241</td>
+                    <td>2.18</td>
+                  </tr>
+                  <tr>
+                    <td>Recon + Distill</td>
+                    <td>387.3</td>
+                    <td>0.286</td>
+                    <td>2.34</td>
+                  </tr>
+                  <tr>
+                    <td>Recon + AVCLIP</td>
+                    <td>394.5</td>
+                    <td>0.273</td>
+                    <td>2.71</td>
+                  </tr>
+                  <tr class="best">
+                    <td>OmniVAE</td>
+                    <td>376.8</td>
+                    <td>0.314</td>
+                    <td>2.89</td>
+                  </tr>
+                </tbody>
+              </table>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="resources" class="section resources">
+        <div class="container resource-layout">
+          <div>
+            <p class="section-label">Resources</p>
+            <h2>Code, checkpoints, and release validation scripts.</h2>
+            <p>
+              The GitHub repository contains VAE, T2AV generation, and sync
+              probing code. The Hugging Face bundle contains release VAE
+              checkpoints, T2AV DiT checkpoints, the text encoder dependency,
+              Verse-Bench manifests, and metric weights.
+            </p>
+          </div>
+          <div class="resource-list">
+            <a href="https://github.com/JunZhan2000/OmniVAE">
+              <span>GitHub</span>
+              <strong>JunZhan2000/OmniVAE</strong>
+            </a>
+            <a href="https://huggingface.co/zhanjun/OmniVAE">
+              <span>Hugging Face</span>
+              <strong>zhanjun/OmniVAE</strong>
+            </a>
+            <a href="#" aria-disabled="true">
+              <span>Paper</span>
+              <strong>arXiv coming soon</strong>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="citation band">
+        <div class="container">
+          <div class="section-heading">
+            <p class="section-label">Citation</p>
+            <h2>Temporary citation entry.</h2>
+          </div>
+          <pre><code>@article{omnivae2026,
+  title   = {OmniVAE: A Cross-Modal Aligned VAE for Joint Audio-Video Generation},
+  author  = {Zhan, Jun and Contributors},
+  journal = {arXiv preprint arXiv:XXXX.XXXXX},
+  year    = {2026},
+  url     = {https://github.com/JunZhan2000/OmniVAE}
+}</code></pre>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <span>OmniVAE</span>
+        <span>Apache-2.0 licensed code release.</span>
+      </div>
+    </footer>
+  </body>
+</html>
