@@ -359,6 +359,28 @@ figcaption {
   gap: 26px;
 }
 
+.case-group {
+  display: grid;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.case-group:first-child {
+  margin-top: 0;
+}
+
+.case-group h3 {
+  margin-bottom: 0;
+  color: var(--accent-3);
+  font-size: 1.18rem;
+}
+
+.case-group p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
 .case-card {
   display: grid;
   gap: 20px;
@@ -462,6 +484,37 @@ figcaption {
   color: #0a554e;
   font-size: 0.78rem;
   font-style: normal;
+  font-weight: 820;
+}
+
+.case-table {
+  width: 100%;
+  align-self: stretch;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f7faf8;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  font-size: 0.82rem;
+}
+
+.case-table th,
+.case-table td {
+  padding: 9px 10px;
+}
+
+.case-table th {
+  background: rgba(15, 124, 114, 0.08);
+}
+
+.case-table td:first-child,
+.case-table th:first-child {
+  white-space: normal;
+}
+
+.case-table td:last-child {
+  color: #0a554e;
   font-weight: 820;
 }
 
@@ -657,6 +710,11 @@ code {
 
   .case-videos {
     grid-template-columns: 1fr;
+  }
+
+  .case-table {
+    display: block;
+    overflow-x: auto;
   }
 
   .case-header h3 {
